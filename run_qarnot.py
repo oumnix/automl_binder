@@ -4,7 +4,6 @@ import qarnot
 import logging
 from logging.config import fileConfig
 
-
 def submit_task(param_dict):
 
     # Configure logger
@@ -20,6 +19,7 @@ def submit_task(param_dict):
         logger.debug("Creating task...")
         task = conn.create_task('automl-mvp', 'auto-sklearn-cluster', int(param_dict['nodes']))
 
+        # Create an input bucket and attach it to the task
         logger.debug("Provisionning input bucket...")
         input_bucket = conn.create_bucket('automl-mvp-input')
         input_bucket.sync_directory('input_binder/')
@@ -70,6 +70,11 @@ def submit_task(param_dict):
         # Display errors on failure
         if task.state == 'Failure':
             print("** Errors: %s" % task.errors[0])
-
+        
+        # Download results in output folder
+        # task.download_results('output_binder')
+    
     except Exception:
         logger.exception("An exception occured.")
+
+    task.download_results('output_binder')
