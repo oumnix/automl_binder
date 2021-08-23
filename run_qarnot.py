@@ -7,20 +7,20 @@ from logging.config import fileConfig
 def submit_task(param_dict):
 
     # Configure logger
-    # print("Configure logger")
+    print("Configure logger")
     fileConfig("python_logging.conf")
     logger = logging.getLogger()
-    # logger.debug("Logger configured successfully")
+    logger.debug("Logger configured successfully")
 
     try:
-        # logger.debug("Connecting to Qarnot API...")
+        logger.debug("Connecting to Qarnot API...")
         conn = qarnot.Connection(client_token=param_dict['token'], cluster_url='https://api.qualif.qarnot.com/')
 
-        # logger.debug("Creating task...")
+        logger.debug("Creating task...")
         task = conn.create_task('automl-mvp', 'auto-sklearn-cluster', int(param_dict['nodes']))
 
         # Create an input bucket and attach it to the task
-        # logger.debug("Provisionning input bucket...")
+        logger.debug("Provisionning input bucket...")
         input_bucket = conn.create_bucket('automl-mvp-input')
         input_bucket.sync_directory('input_binder/')
         task.resources.append(input_bucket)
@@ -76,5 +76,3 @@ def submit_task(param_dict):
     
     except Exception:
         logger.exception("An exception occured.")
-
-    # task.download_results('output_binder')
