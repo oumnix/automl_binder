@@ -14,7 +14,7 @@ def submit_task(param_dict):
 
     try:
         logger.debug("Connecting to Qarnot API...")
-        conn = qarnot.Connection(client_token=param_dict['token'], cluster_url='https://api.qualif.qarnot.com/')
+        conn = qarnot.Connection(client_token=param_dict['token'])
 
         logger.debug("Creating task...")
         task = conn.create_task('automl-mvp', 'auto-sklearn-cluster', int(param_dict['nodes']))
@@ -32,7 +32,6 @@ def submit_task(param_dict):
         # Fill in task constants from the notebook form
         task.constants['DOCKER_TAG'] = "mvp"
         task.constants['TARGET_COL'] = param_dict['target']
-        task.constants['POS_LABEL'] = param_dict['pos_label']
         task.constants['TOTAL_TIME_LIMIT'] = param_dict['total_time']
         task.constants['PER_RUN_TIME_LIMIT'] = param_dict['per_run_time']
         task.constants['N_CV_FOLDS'] = param_dict['cv']
