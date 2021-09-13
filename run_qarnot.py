@@ -45,8 +45,8 @@ def submit_task(param_dict):
 
         # take a snapshot every 5 seconds and ignore dask-worker-space directory
         task.snapshot(5)
-        task.snapshot_blacklist='dask-worker-space'
-        task.results_blacklist='dask-worker-space'
+        task.snapshot_whitelist='outputs'
+        task.results_whitelist='outputs'
 
         # Submit the task
         logger.debug("Launching task...")    
