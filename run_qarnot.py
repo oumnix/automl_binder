@@ -30,7 +30,7 @@ def submit_task(param_dict):
         task.results = output_bucket
 
         # Fill in task constants from the notebook form
-        task.constants['DOCKER_TAG'] = "mvp"
+        task.constants['DOCKER_TAG'] = "v2"
         task.constants['TARGET_COL'] = param_dict['target']
         task.constants['TOTAL_TIME_LIMIT'] = param_dict['total_time']
         task.constants['PER_RUN_TIME_LIMIT'] = param_dict['per_run_time']
@@ -71,7 +71,7 @@ def submit_task(param_dict):
             print("** Errors: %s" % task.errors[0])
         
         # Download results in output folder
-        task.download_results('output_binder')
+        task.download_results('.')
     
     except Exception:
         logger.exception("An exception occured.")
